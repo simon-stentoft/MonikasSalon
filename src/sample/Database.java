@@ -10,7 +10,7 @@ public class Database {
     private Connection connection; //make final
     private Statement stmt;
     private final String databaseName = "Monicas.db";
-    private final String url = "jdbc:sqlite:"+databaseName;
+    private final String url = "jdbc:sqlite:" + databaseName;
 
     Database() {
         connection = null; //move to final and add throws clause to database constructor
@@ -37,7 +37,7 @@ public class Database {
     public void InstallDatabase() {
         Database d =new Database();
         if (d.connection == null) {  //todo er altid not null
-            DbsqlUpdate("CREATE DATABASE "+url);
+            DbsqlUpdate("CREATE DATABASE " + url);
             System.out.println("Database opretet");
         }
     }
@@ -45,12 +45,15 @@ public class Database {
     public void createTable() {
         try {
             String sql = "CREATE TABLE IF NOT EXISTS USER(\n"
+                    + " ID INTEGER PRIMARY KEY,\n"
                     + " name TEXT NOT NULL,\n"
                     + "	gender TEXT NOT NULL,\n"
-                    + "	email TEXT PRIMARY KEY,\n"
+                    + "	email TEXT NOT NULL,\n"
                     + "	phoneNumber INTEGER NOT NULL,\n"
                     + "	password TEXT NOT NULL, \n"
-                    + "	expiringDate TEXT NOT NULL, \n"  //Aftaler må først slettes efter 5 år.
+                    + " isCustomer TEXT NOT NULL, \n"
+                    + " creationDate TEXT NOT NULL, \n"
+                    + "	expiringDate TEXT NOT NULL"  //Aftaler må først slettes efter 5 år.
                     + ");";
 
             Statement stmt = connection.createStatement();
@@ -61,10 +64,10 @@ public class Database {
         }
     }
 
-    public void addUser(ActionEvent event, String name, String gender, String email, int phoneNumber, String password) {
+    public void addUser(ActionEvent event, String name, String gender, String email, int phoneNumber, String password, String isCustomer, String creationDate, String expiringDate) {
        // Controller c = new Controller();
-        String sql = "INSERT INTO USER(name, gender, email, phoneNumber, password) " +
-                "VALUES ('" + name + "','" + gender + "','" + email + "','" + phoneNumber + "','" + password + "')";
+        String sql = "INSERT INTO USER(name, gender, email, phoneNumber, password, isCustomer, expiringDate) " +
+                "VALUES ('" + name + "','" + gender + "','" + email + "','" + phoneNumber + "','" + password + "','" + isCustomer + "','" + creationDate + "''" + expiringDate + "')";
 
         stmt = null;
         try {
