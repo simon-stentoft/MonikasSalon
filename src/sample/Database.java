@@ -46,6 +46,22 @@ public class Database {
         }
     }
 
+    //  Adding statements--------------------------------------------------
+
+
+
+    //create new user
+
+    public void addUser(String name, String gender, String email, int phoneNumber, String username , String password , Boolean worker ) {
+        String sql = "INSERT INTO USER( name, gender , email, phoneNumber, username, password, worker, createdDate )\n" +
+                "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , '"+username+"' , "+password+" , "+worker+" ,date('now'))";
+        DbsqlUpdateAndPrint(sql,"User created.");
+    }
+
+    //
+
+
+
 //  Install database and create tables -----------------------------------------------
 
     //Install database
@@ -113,17 +129,6 @@ public class Database {
     }
 
 
-//  Adding statements--------------------------------------------------
-
-
-
-    //create new user
-
-    public void addUser(String name, String gender, String email, int phoneNumber, String username , String password , Boolean worker ) {
-        String sql = "INSERT INTO USER( name, gender , email, phoneNumber, username, password, worker, createdDate )\n" +
-                "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , '"+username+"' , "+password+" , "+worker+" ,date('now'))";
-       DbsqlUpdateAndPrint(sql,"User created.");
-    }
 
 
 
