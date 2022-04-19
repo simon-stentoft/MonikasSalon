@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.*;
@@ -32,6 +33,7 @@ public class Database {
             e.printStackTrace();
         }
     }
+
     //prepared SQL-exequteUpdate with print
     public void DbsqlUpdateAndPrint(String SQLUpdate,String print){
         try{
@@ -44,41 +46,89 @@ public class Database {
         }
     }
 
- /*   //Install database
+//  Install database and create tables -----------------------------------------------
+
+    //Install database
     public void InstallDatabase() {
         Database d =new Database();
-        if (d.connection == null) {  //todo er altid not null
+        if (d.connection == null) {  // er altid not null
             DbsqlUpdate("CREATE DATABASE "+url);
             System.out.println("Database opretet");
         }
-    }*/
-
-    public void createTable() {
-
+    }
+    //USER TABLE
+    public void createUserTable() {
             String sql = "CREATE TABLE IF NOT EXISTS USER(\n"
+                    + " userID INTEGER PRIMARY KEY, \n"
                     + " name TEXT NOT NULL,\n"
                     + "	gender TEXT NOT NULL,\n"
-                    + "	email TEXT PRIMARY KEY,\n"
+                    + "	email TEXT ,\n"
                     + "	phoneNumber INTEGER NOT NULL,\n"
+                    + "	username TEXT NOT NULL,\n"
                     + "	password TEXT NOT NULL, \n"
-                    + "	expiringDate TEXT NOT NULL \n"  //Aftaler må først slettes efter 5 år.
+                    + " worker INTEGER, \n "
+                    + "	createdDate TEXT NOT NULL \n"  //Aftaler må først slettes efter 5 år.
                     + ");";
-
+        DbsqlUpdate(sql);
+    }
+    //WORKER TABLE for specified users
+    public void createWorkTIME() {
+        String sql = "CREATE TABLE IF NOT EXISTS WORKTIME(\n"
+                + " worktimeID INTEGER PRIMARY KEY, \n"
+                + " userFK INTEGER , \n"
+                + " weekday   INTEGER , \n"
+                + " startTime     TEXT , \n"
+                + " endTime     TEXT , \n"
+                + " FOREIGN KEY (userFK) REFERENCES User (userID) \n"
+                + " );";
+        DbsqlUpdate(sql);
+    }
+    //APPOINTMENT TABLE
+    public void createAppointmentTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS APPOINTMENTS(\n"
+                + " appointmentID INTEGER PRIMARY KEY, \n"
+                + "	worker INTEGER,\n"
+                + "	costumer INTEGER,\n"
+                + " description TEXT ,\n"
+                + "	startDateTime TEXT NOT NULL,\n"
+                + "	duration INTEGER NOT NULL,\n"
+                + "	price REAL,\n"
+                + " note TEXT ,\n"
+                + "	created date now NOT NULL, \n"  //Aftaler må først slettes efter 5 år.
+                + " FOREIGN KEY (worker) REFERENCES User (userID) \n"
+                + " FOREIGN KEY (costumer) REFERENCES User (userID) \n"
+                + ");";
+        DbsqlUpdate(sql);
+    }
+    //PREDEFINEDAPPOINTMENTS TABLE
+    public void createPreDefinedAppointments() {
+        String sql = "CREATE TABLE IF NOT EXISTS PREDEFINEDAPPOINTMENTS(\n"
+                + " preappointmentID INTEGER PRIMARY KEY, \n"
+                + " description TEXT ,\n"
+                + "	duration INTEGER NOT NULL,\n"
+                + "	price REAL,\n"
+                + "	created TEXT \n"
+                + ");";
         DbsqlUpdate(sql);
     }
 
-    public void addUser(ActionEvent event, String name, String gender, String email, int phoneNumber, String password , String expiringDate) {
-       // Controller c = new Controller();
-        String sql = "INSERT INTO USER(name, gender, email, phoneNumber, password , expiringDate) " +
-                "VALUES ('" + name + "','" + gender + "','" + email + "','" + phoneNumber + "','" + password + "','" + expiringDate + "')";
 
+//  Adding statements--------------------------------------------------
+
+
+
+    //create new user
+
+    public void addUser(String name, String gender, String email, int phoneNumber, String username , String password , Boolean worker ) {
+        String sql = "INSERT INTO USER( name, gender , email, phoneNumber, username, password, worker, createdDate )\n" +
+                "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , '"+username+"' , "+password+" , "+worker+" ,date('now'))";
        DbsqlUpdateAndPrint(sql,"User created.");
-
-
     }
 
-    public void login(ActionEvent event, String email, String password) { //Skal rettes lidt i efter metoder i Controller er lavet
-        Controller c = new Controller();
+
+
+  /*  public void login(ActionEvent event, String email, String password) { //Skal rettes lidt i efter metoder i Controller er lavet
+       // Controller c = new Controller();
         String sql = "SELECT * FROM USER WHERE phoneNumber = ? AND password = ?";
         try {
             connection = DriverManager.getConnection(url);
@@ -101,5 +151,5 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
