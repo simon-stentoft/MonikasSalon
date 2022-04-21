@@ -23,6 +23,5 @@ public class Main extends Application {
         Database db = new Database();
 
         db.InstallDatabase();
-        db.createTable();
     }
 }
