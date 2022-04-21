@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -14,7 +15,7 @@
            </font>
        </Text>
       <TextField fx:id="nameTextField" layoutX="355.0" layoutY="235.0" prefHeight="25.0" prefWidth="192.0" />
-      <TextField fx:id="genderTextField" layoutX="356.0" layoutY="275.0" prefHeight="25.0" prefWidth="192.0" />
+      <TextField fx:id="genderTextField" layoutX="355.0" layoutY="275.0" prefHeight="25.0" prefWidth="192.0" />
       <TextField fx:id="emailTextField" layoutX="355.0" layoutY="315.0" prefHeight="25.0" prefWidth="192.0" />
       <TextField fx:id="phoneNrTextField" layoutX="355.0" layoutY="355.0" prefHeight="25.0" prefWidth="192.0" />
       <TextField fx:id="passwordTextField" layoutX="355.0" layoutY="394.0" prefHeight="25.0" prefWidth="192.0" />
@@ -30,5 +31,10 @@
       <Text layoutX="293.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
       <Button fx:id="createUserButton" layoutX="548.0" layoutY="662.0" mnemonicParsing="false" onAction="#createUser" prefHeight="53.0" prefWidth="122.0" text="Lav bruger" />
       <Button fx:id="backToStartButton" layoutX="231.0" layoutY="662.0" mnemonicParsing="false" onAction="#switchToStartPage" prefHeight="53.0" prefWidth="122.0" text="Tilbage" />
+      <CheckBox fx:id="isWorkerCheckBox" layoutX="356.0" layoutY="430.0" mnemonicParsing="false" text="Medarbejder?">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </CheckBox>
    </children>
 </Pane>
