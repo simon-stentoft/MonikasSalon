@@ -1,9 +1,5 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import org.junit.Test;
-
-import java.io.IOException;
 import java.sql.*;
 
 public class Database {
@@ -45,9 +41,23 @@ public class Database {
             e.printStackTrace();
         }
     }
+    //prepared SQL-query todo skal måske slettes
+    public void DbsqlQuery(String sql){
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement prep = connection.prepareStatement(sql);
+        try (ResultSet res = prep.executeQuery()){
+            while (res.next()){
+                System.out.println(res.getString(1));
+            }
+        }
+        }catch (SQLException e){
+            e.getErrorCode();
+        }
+    }
+
 
     //  Adding statements--------------------------------------------------
-
 
 
     //create new user
@@ -55,10 +65,68 @@ public class Database {
     public void addUser(String name, String gender, String email, int phoneNumber, String username , String password , Boolean worker ) {
         String sql = "INSERT INTO USER( name, gender , email, phoneNumber, username, password, worker, createdDate )\n" +
                 "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , '"+username+"' , "+password+" , "+worker+" ,date('now'))";
-        DbsqlUpdateAndPrint(sql,"User created.");
+        DbsqlUpdate(sql);
     }
 
-    //
+    //  Queries -------------------------------------------------------------
+
+    // get last created user
+    public User getLastUser() {
+        User user = new User();
+        String sql = "select * FROM USER ORDER BY userID DESC LIMIT 1";
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement prep = connection.prepareStatement(sql);
+            try (ResultSet res = prep.executeQuery()){
+                while (res.next()){
+                    user.setUserID(res.getInt(1));
+                    user.setName(res.getString(2));
+                    user.setGender(res.getString(3));
+                    user.setEmail(res.getString(4));
+                    user.setPhoneNumber(res.getInt(5));
+                    user.setUsername(res.getString(6));
+                    user.setPassword(res.getString(7));
+                    user.setWorker(res.getBoolean(8));
+                    user.setCreatedDate(res.getString(9));
+                }
+            }
+        }catch (SQLException e){
+            e.getErrorCode();
+        }
+        return user;
+    }
+    // get one user
+    public User getUser(User user, int userID ){
+        String sql ="select * FROM USER WHERE userID = '"+userID+"'";
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement prep = connection.prepareStatement(sql);
+            try (ResultSet res = prep.executeQuery()){
+                while (res.next()){
+                    user.setUserID(res.getInt(1));
+                    user.setName(res.getString(2));
+                    user.setGender(res.getString(3));
+                    user.setEmail(res.getString(4));
+                    user.setPhoneNumber(res.getInt(5));
+                    user.setUsername(res.getString(6));
+                    user.setPassword(res.getString(7));
+                    user.setWorker(res.getBoolean(8));
+                    user.setCreatedDate(res.getString(9));
+                }
+            }
+        }catch (SQLException e){
+            e.getErrorCode();
+        }
+        return user;
+    }
+
+// Delete statements -----------------------------------------------------------------
+
+//Delete user
+public void DeleteUser( int userID ){
+    String sql ="DELETE FROM USER WHERE userID = '"+userID+"'";
+    DbsqlUpdate(sql);
+}
 
 
 

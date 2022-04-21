@@ -4,7 +4,7 @@ public class test_slettes {
     public static void main(String[] args) {
 
         Database db = new Database();
-
+/*
         db.InstallDatabase();
         System.out.println("database er måske oprettet");
         db.createUserTable();
@@ -15,7 +15,7 @@ public class test_slettes {
         System.out.println("worktmime");
         db.createPreDefinedAppointments();
         System.out.println("preapp");
-
-        db.addUser("jensja" , "ja" , "minemailblaasky..dk" , 1515151588 , "userjensen" , "123456" , true);
+*/
+        db.addUser("lada" , "ja" , "minemailblaasky..dk" , 1515151588 , "userjensen" , "123456" , true);
     }
 }
