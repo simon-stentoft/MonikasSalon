@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.ActionEvent;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class Database {
@@ -64,10 +65,13 @@ public class Database {
 
     //create new user
 
-    public void addUser(String name, String gender, String email, int phoneNumber, String username , String password , Boolean worker ) {
-        String sql = "INSERT INTO USER( name, gender , email, phoneNumber, username, password, worker, createdDate )\n" +
-                "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , '"+username+"' , "+password+" , "+worker+" ,date('now'))";
+    public void addUser(ActionEvent event, String name, String gender, String email, int phoneNumber , String password) throws IOException {
+        String sql = "INSERT INTO USER( name, gender, email, phoneNumber, password, createdDate )\n" +
+                "VALUES ('"+name+" ', '"+gender+"' , '"+email+"' ,'"+phoneNumber+"' , "+password+" ,date('now'))";
         DbsqlUpdate(sql);
+        Controller c = new Controller();
+        c.switchToLogInView(event);
+        System.out.println("Added user to database.");
     }
 
     //  Queries -------------------------------------------------------------
@@ -86,10 +90,9 @@ public class Database {
                     user.setGender(res.getString(3));
                     user.setEmail(res.getString(4));
                     user.setPhoneNumber(res.getInt(5));
-                    user.setUsername(res.getString(6));
-                    user.setPassword(res.getString(7));
-                    user.setWorker(res.getBoolean(8));
-                    user.setCreatedDate(res.getString(9));
+                    user.setPassword(res.getString(6));
+                    user.setWorker(res.getBoolean(7));
+                    user.setCreatedDate(res.getString(8));
                 }
             }
         }catch (SQLException e){
@@ -97,7 +100,7 @@ public class Database {
         }
         return user;
     }
-    // get one user by userID
+    // get one user
     public User getUser(User user, int userID ){
         String sql ="select * FROM USER WHERE userID = '"+userID+"'";
         try {
@@ -110,10 +113,9 @@ public class Database {
                     user.setGender(res.getString(3));
                     user.setEmail(res.getString(4));
                     user.setPhoneNumber(res.getInt(5));
-                    user.setUsername(res.getString(6));
-                    user.setPassword(res.getString(7));
-                    user.setWorker(res.getBoolean(8));
-                    user.setCreatedDate(res.getString(9));
+                    user.setPassword(res.getString(6));
+                    user.setWorker(res.getBoolean(7));
+                    user.setCreatedDate(res.getString(8));
                 }
             }
         }catch (SQLException e){
@@ -121,36 +123,6 @@ public class Database {
         }
         return user;
     }
-
-    // get one user by userName
-    public int getUserByMailAndPassword( String userMail , String password){
-        int userID = 0;
-        String sql ="select USERID FROM USER WHERE EMAIL = '"+userMail+"' AND PASSWORD = '"+password+"'";
-        try {
-            connection = DriverManager.getConnection(url);
-            PreparedStatement prep = connection.prepareStatement(sql);
-            try (ResultSet res = prep.executeQuery()){
-                while (res.next()){
-                    userID = res.getInt(1);
-                }
-            }
-        }catch (SQLException e){
-            e.getErrorCode();
-        }
-        if (userID > 0){
-            return userID;
-        }else {
-            return -1;
-        }
-    }
-
-    // login method
-    public void login(ActionEvent event, String loginEmail, String loginPassword) {
-        int id = getUserByMailAndPassword(loginEmail,loginPassword);
-        User u1 = new  User();
-        getUser(u1,id); // todo hvor skal den bruges og oínkluderes med event
-    }
-
 
 // Delete statements -----------------------------------------------------------------
 
@@ -163,8 +135,6 @@ public class Database {
 
 
 //  Install database and create tables -----------------------------------------------
-
-
 
     //Install database
     public void InstallDatabase() {
@@ -182,9 +152,7 @@ public class Database {
                 + "	gender TEXT NOT NULL,\n"
                 + "	email TEXT ,\n"
                 + "	phoneNumber INTEGER NOT NULL,\n"
-                + "	username TEXT NOT NULL,\n"
                 + "	password TEXT NOT NULL, \n"
-                + " worker INTEGER, \n "
                 + "	createdDate TEXT NOT NULL \n"  //Aftaler må først slettes efter 5 år.
                 + ");";
         DbsqlUpdate(sql);
@@ -230,34 +198,27 @@ public class Database {
         DbsqlUpdate(sql);
     }
 
-
-
-
-
-
-
-
-  /*  public void login(ActionEvent event, String email, String password) { //Skal rettes lidt i efter metoder i Controller er lavet
-       // Controller c = new Controller();
+    public void login(ActionEvent event, String phoneNumber, String password) {
+        Controller c = new Controller();
         String sql = "SELECT * FROM USER WHERE phoneNumber = ? AND password = ?";
         try {
             connection = DriverManager.getConnection(url);
             PreparedStatement prestmt = connection.prepareStatement(sql);
-            prestmt.setString(1, email);
+            prestmt.setString(1, phoneNumber);
             prestmt.setString(2, password);
             ResultSet rs = prestmt.executeQuery();
             if (rs.next()) {
                 System.out.println("Login successful.");
-                //c.switchToTransferPage(event);
+                c.switchToCalendarView(event);
             } else {
                 System.out.println("Wrong login information.");
-                //c.switchToLogInView(event);
+                c.switchToLogInView(event);
             }
             connection.close();
             prestmt.close();
             rs.close();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

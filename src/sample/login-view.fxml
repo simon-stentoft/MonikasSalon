@@ -9,14 +9,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="903.0" style="-fx-background-color: deepskyblue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <PasswordField fx:id="passwordLoginPasswordField" layoutX="334.0" layoutY="379.0" prefHeight="27.0" prefWidth="235.0" />
        <Text layoutX="387.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monikas Salon">
            <font>
                <Font size="20.0" />
            </font>
        </Text>
-      <TextField fx:id="emailLoginTextField" layoutX="334.0" layoutY="317.0" prefHeight="27.0" prefWidth="235.0" />
-      <PasswordField fx:id="passwordLoginTextField" layoutX="334.0" layoutY="379.0" prefHeight="27.0" prefWidth="235.0" />
-      <Text layoutX="300.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
+      <TextField fx:id="phoneLoginTextField" layoutX="334.0" layoutY="317.0" prefHeight="27.0" prefWidth="235.0" />
+      <Text layoutX="250.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number:" />
       <Text layoutX="278.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
       <Text layoutX="428.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
          <font>
@@ -24,6 +24,6 @@
          </font>
       </Text>
       <Button fx:id="loginButton" layoutX="406.0" layoutY="420.0" mnemonicParsing="false" onAction="#switchSceneIfLoginSuccesful" prefHeight="36.0" prefWidth="91.0" text="Login" />
-      <Button fx:id="moveToAccCreateButton" layoutX="379.0" layoutY="524.0" mnemonicParsing="false" onAction="#switchToNewUserView" text="No account? Create one" />
+      <Button fx:id="moveToAccCreateButton" layoutX="387.0" layoutY="525.0" mnemonicParsing="false" onAction="#switchToNewUserView" text="Ingen bruger? Lav en" />
    </children>
 </Pane>
