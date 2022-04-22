@@ -2,7 +2,6 @@ package sample;
 
 import javafx.event.ActionEvent;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class Database {
@@ -98,7 +97,7 @@ public class Database {
         }
         return user;
     }
-    // get one user
+    // get one user by userID
     public User getUser(User user, int userID ){
         String sql ="select * FROM USER WHERE userID = '"+userID+"'";
         try {
@@ -123,6 +122,36 @@ public class Database {
         return user;
     }
 
+    // get one user by userName
+    public int getUserByMailAndPassword( String userMail , String password){
+        int userID = 0;
+        String sql ="select USERID FROM USER WHERE EMAIL = '"+userMail+"' AND PASSWORD = '"+password+"'";
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement prep = connection.prepareStatement(sql);
+            try (ResultSet res = prep.executeQuery()){
+                while (res.next()){
+                    userID = res.getInt(1);
+                }
+            }
+        }catch (SQLException e){
+            e.getErrorCode();
+        }
+        if (userID > 0){
+            return userID;
+        }else {
+            return -1;
+        }
+    }
+
+    // login method
+    public void login(ActionEvent event, String loginEmail, String loginPassword) {
+        int id = getUserByMailAndPassword(loginEmail,loginPassword);
+        User u1 = new  User();
+        getUser(u1,id); // todo hvor skal den bruges og oínkluderes med event
+    }
+
+
 // Delete statements -----------------------------------------------------------------
 
     //Delete user
@@ -134,6 +163,8 @@ public class Database {
 
 
 //  Install database and create tables -----------------------------------------------
+
+
 
     //Install database
     public void InstallDatabase() {
@@ -198,6 +229,9 @@ public class Database {
                 + ");";
         DbsqlUpdate(sql);
     }
+
+
+
 
 
 
