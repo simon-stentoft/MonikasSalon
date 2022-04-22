@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,6 +18,7 @@ public class Controller {
     private Parent root;
 
     public TextField nameTextField, genderTextField, emailTextField, phoneNrTextField, passwordTextField, emailLoginTextField, passwordLoginTextField;
+    public CheckBox isWorkerCheckBox;
 
     public void switchToLogInView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("login-view.fxml"));

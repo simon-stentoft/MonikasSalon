@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="903.0" style="-fx-background-color: deepskyblue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplebanktransfer.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="903.0" style="-fx-background-color: deepskyblue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
        <Text layoutX="397.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Monikas Salon">
            <font>
@@ -29,8 +29,8 @@
       <Text layoutX="319.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
       <Text layoutX="268.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number:" />
       <Text layoutX="293.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
-      <Button fx:id="createUserButton" layoutX="548.0" layoutY="662.0" mnemonicParsing="false" onAction="#createUser" prefHeight="53.0" prefWidth="122.0" text="Lav bruger" />
-      <Button fx:id="backToStartButton" layoutX="231.0" layoutY="662.0" mnemonicParsing="false" onAction="#switchToStartPage" prefHeight="53.0" prefWidth="122.0" text="Tilbage" />
+      <Button fx:id="createUserButton" layoutX="548.0" layoutY="662.0" mnemonicParsing="false" onAction="#switchToLogInView" prefHeight="53.0" prefWidth="122.0" text="Lav bruger" />
+      <Button fx:id="backToStartButton" layoutX="231.0" layoutY="662.0" mnemonicParsing="false" onAction="#switchToLogInView" prefHeight="53.0" prefWidth="122.0" text="Tilbage" />
       <CheckBox fx:id="isWorkerCheckBox" layoutX="356.0" layoutY="430.0" mnemonicParsing="false" text="Medarbejder?">
          <font>
             <Font size="13.0" />
