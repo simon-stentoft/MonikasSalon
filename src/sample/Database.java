@@ -126,10 +126,17 @@ public class Database {
 
 // Delete statements -----------------------------------------------------------------
 
-    //Delete user
+    /*//Delete user
     public void DeleteUser( int userID ){
         String sql ="DELETE FROM USER WHERE userID = '"+userID+"'";
         DbsqlUpdate(sql);
+    }*/
+
+    //Deletes a user using their email from the database.
+    public void deleteUserEmail(ActionEvent event, String userEmail) {
+        String sql = "DELETE FROM USER WHERE email = '"+userEmail+"'";
+        DbsqlUpdate(sql);
+        System.out.println("Deleted user: " + userEmail + ".");
     }
 
 

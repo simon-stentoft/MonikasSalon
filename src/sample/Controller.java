@@ -20,9 +20,8 @@ public class Controller {
     private Scene scene;
     private Parent root;
 
-    public TextField nameTextField, genderTextField, emailTextField, phoneNrTextField, phoneLoginTextField, passwordLoginTextField;
+    public TextField nameTextField, genderTextField, emailTextField, phoneNrTextField, phoneLoginTextField, passwordLoginTextField, deleteUserTextField;
     public PasswordField passwordPasswordField, passwordLoginPasswordField;
-    public CheckBox isWorkerCheckBox;
 
     public void switchToLogInView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
@@ -56,6 +55,15 @@ public class Controller {
         db.login(event, loginPhoneNumber, loginPassword);
     }
 
+    //Switches scene to startpage-view.fxml .Logging out
+    public void switchSceneToStartPageLogout(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("startpage-view.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void kallendarRequest(){
 
     }
@@ -77,15 +85,20 @@ public class Controller {
         db.addUser(event, nameTextField.getText(), genderTextField.getText(), emailTextField.getText(), Integer.parseInt(phoneNrTextField.getText()), passwordPasswordField.getText());
     }
 
+    //Deletes a user using their email from the database.
+    public void deleteUserWithEmail(ActionEvent event) throws IOException {
+        db.deleteUserEmail(event, deleteUserTextField.getText());
+    }
+
     //return last added user
     public User lastUser(){
         return db.getLastUser();
     }
 
-    //Delete user
+    /*//Delete user
     public void deleteUser(int userID){
         db.DeleteUser(userID);
-    }
+    }*/
 
    /* public void switchSceneIfLoginSuccesful(ActionEvent event) throws IOException {
         String loginEmail = emailLoginTextField.getText();
