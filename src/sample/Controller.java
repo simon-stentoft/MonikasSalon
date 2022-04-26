@@ -1,18 +1,23 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Controller {
+public class Controller implements Initializable {
 
     Database db = new Database();
 
@@ -22,6 +27,20 @@ public class Controller {
 
     public TextField nameTextField, genderTextField, emailTextField, phoneNrTextField, phoneLoginTextField, passwordLoginTextField, deleteUserTextField;
     public PasswordField passwordPasswordField, passwordLoginPasswordField;
+
+    @FXML
+    public ChoiceBox<String> barberChoiceBox = new ChoiceBox<>();
+    public ChoiceBox<String> timeChoiceBox = new ChoiceBox<>();
+
+    //List of different Barbers to choose from.
+    public String[] barbers = {"Monika","Anton"};
+    public String[] time = {"08:00", "08:30", "09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30"};
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        barberChoiceBox.getItems().addAll(barbers);
+        timeChoiceBox.getItems().addAll(time);
+    }
 
     public void switchToLogInView(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
@@ -94,6 +113,8 @@ public class Controller {
     public User lastUser(){
         return db.getLastUser();
     }
+
+
 
     /*//Delete user
     public void deleteUser(int userID){
